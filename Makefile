@@ -206,16 +206,12 @@ install-gobox:
 
 
 xtar: install-gobox
-	if [ -d ~/config ]; then  \
-		mkdir -p ~/.docker && cp ~/config/.docker/config.json ~/.docker/ ;\
-		mkdir -p ~/.config && cp ~/config/.config/starship.toml ~/.config/ ; \
-		cp ~/.bashrc ~/.bashrc_bob; \
-		cp ~/.bash_profile ~/.bash_profile_bob; \
-		tar -C ~  -zcvf  x.tar.gz .config/starship.toml .docker/config.json  .ssh .vimrc  bin/v bin/z.sh .tmux.conf .shextra .gitconfig  .bash_profile_bob .bashrc_bob .env ; \
-		gobox sym-encrypt x.tar.gz ~/config/x.tar.gz.gobox ; \
-	else \
-		echo missing config dir, do git clone https://github.com/bobbae/config ; \
-	fi
+	#mkdir -p ~/.docker && cp .docker/config.json ~/.docker/ 
+	#mkdir -p ~/.config && cp .config/starship.toml ~/.config/ 
+	-[ -f ~/.bashrc ] && cp ~/.bashrc ~/.bashrc_bob 
+	-[ -f ~/.bash_profile ] && cp ~/.bash_profile ~/.bash_profile_bob
+	tar -C ~  -zcvf  x.tar.gz    .ssh .vimrc  bin/v bin/z.sh .tmux.conf .shextra .gitconfig  .bash_profile_bob .bashrc_bob .env ; 
+	gobox sym-encrypt x.tar.gz x.tar.gz.gobox ; 
 
 xuntar: install-gobox
 	#cp examples/x.tar.gz.gpg
